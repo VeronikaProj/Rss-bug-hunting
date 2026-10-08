@@ -8,8 +8,8 @@ const filterButtons = document.querySelectorAll(".filter");
 const FILTERS = {
   ALL: "all",
   DONE: "done",
-  ACTIVE: "active"
-}
+  ACTIVE: "active",
+};
 
 let tasks = [];
 let currentFilter = FILTERS.ALL;
@@ -17,32 +17,33 @@ let nextId = 1;
 
 function addTask() {
   const text = input.value;
-  if (text.trim() == "") { 
+  if (text.trim() == "") {
     errorEl.hidden = false;
-  }
-  else
-  {
+  } else {
     tasks.push({ id: nextId++, text: text, done: false });
     input.value = "";
     render();
-  };
+  }
 }
 
 function toggleTask(id) {
   const task = tasks.find((t) => t.id === id);
-  if (task.done) { task.done = false;}
-  else { task.done = true; };
+  if (task.done) {
+    task.done = false;
+  } else {
+    task.done = true;
+  }
   render();
 }
 
 function deleteTask(id) {
   indexToDelete = tasks.findIndex((t) => t.id == id);
-  tasks.splice(indexToDelete,1);
+  tasks.splice(indexToDelete, 1);
   render();
 }
 
 function clearCompleted() {
-  tasks = tasks.filter(task => !task.done);
+  tasks = tasks.filter((task) => !task.done);
   render();
 }
 
@@ -50,11 +51,11 @@ function getVisibleTasks() {
   let visibleTasks;
 
   switch (currentFilter) {
-    case FILTERS.ACTIVE : 
-      visibleTasks = tasks.filter(task => !task.done);
+    case FILTERS.ACTIVE:
+      visibleTasks = tasks.filter((task) => !task.done);
       break;
-    case FILTERS.DONE :
-      visibleTasks = tasks.filter(task => task.done);
+    case FILTERS.DONE:
+      visibleTasks = tasks.filter((task) => task.done);
       break;
     default:
       visibleTasks = tasks;
@@ -63,7 +64,8 @@ function getVisibleTasks() {
 }
 
 function updateCounter() {
-  counter.textContent = "Активных задач: " + tasks.filter(task => !task.done).length;
+  counter.textContent =
+    "Активных задач: " + tasks.filter((task) => !task.done).length;
 }
 
 function hideErrorMessage() {
@@ -112,6 +114,5 @@ filterButtons.forEach((btn) => {
     render();
   });
 });
-
 
 render();

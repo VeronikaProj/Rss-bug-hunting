@@ -23,7 +23,9 @@ function getFiltered() {
   const sort = sortSelect.value;
 
   if (search) {
-    result = result.filter((p) => p.name.toLowerCase().startsWith(search.toLowerCase()));
+    result = result.filter((p) =>
+      p.name.toLowerCase().startsWith(search.toLowerCase()),
+    );
   }
 
   if (category !== "all") {
@@ -35,7 +37,7 @@ function getFiltered() {
   } else if (sort === "asc") {
     result.sort((a, b) => a.price - b.price);
   } else {
-    result.sort((a,b) => a.id - b.id);
+    result.sort((a, b) => a.id - b.id);
   }
 
   return result;

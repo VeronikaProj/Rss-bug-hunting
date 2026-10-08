@@ -37,12 +37,16 @@ function addToCart(event) {
   if (!product) {
     return;
   }
-  let productAlreadyInCart = cart.find(cartEntry => cartEntry.id == id);
-  if (productAlreadyInCart){
+  let productAlreadyInCart = cart.find((cartEntry) => cartEntry.id == id);
+  if (productAlreadyInCart) {
     productAlreadyInCart.qty++;
-  }
-  else {
-    cart.push({ id: product.id, name: product.name, price: product.price, qty: 1 });  
+  } else {
+    cart.push({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      qty: 1,
+    });
   }
   renderCart();
 }
@@ -66,7 +70,7 @@ function removeItem(id) {
 }
 
 function applyPromo() {
-  if ((promoInput.value == "SALE10")) {
+  if (promoInput.value == "SALE10") {
     discount = 0.1;
   }
   renderCart();
@@ -80,7 +84,7 @@ function clearCart() {
 function renderCart() {
   cartItemsEl.innerHTML = "";
   let total = 0;
-  let totalQuantity=0;
+  let totalQuantity = 0;
   cart.forEach((item) => {
     const lineTotal = item.price * item.qty;
     const li = document.createElement("li");
@@ -91,9 +95,15 @@ function renderCart() {
       <button class="qty-btn" data-act="inc">+</button>
       <span class="line">${lineTotal} ₽</span>
       <button class="remove">✕</button>`;
-    li.querySelector('[data-act="inc"]').addEventListener("click", () => increaseQty(item.id));
-    li.querySelector('[data-act="dec"]').addEventListener("click", () => decreaseQty(item.id));
-    li.querySelector(".remove").addEventListener("click", () => removeItem(item.id));
+    li.querySelector('[data-act="inc"]').addEventListener("click", () =>
+      increaseQty(item.id),
+    );
+    li.querySelector('[data-act="dec"]').addEventListener("click", () =>
+      decreaseQty(item.id),
+    );
+    li.querySelector(".remove").addEventListener("click", () =>
+      removeItem(item.id),
+    );
     cartItemsEl.appendChild(li);
     total += item.price * item.qty;
     totalQuantity += item.qty;
@@ -105,24 +115,20 @@ function renderCart() {
 
   badgeEl.textContent = totalQuantity;
   totalEl.textContent = total;
-  if (cart.length ==0 ) {
+  if (cart.length == 0) {
     emptyMsg.hidden = false;
-  }
-  else { 
+  } else {
     emptyMsg.hidden = true;
-  };
-
+  }
 }
-function clearPromo(){
+function clearPromo() {
   discount = 0;
   renderCart();
-
 }
 
 promoBtn.addEventListener("click", applyPromo);
 clearBtn.addEventListener("click", clearCart);
-promoInput.addEventListener("input", clearPromo)
-
+promoInput.addEventListener("input", clearPromo);
 
 renderProducts();
 renderCart();
